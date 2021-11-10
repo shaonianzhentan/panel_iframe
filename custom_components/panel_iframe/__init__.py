@@ -3,10 +3,7 @@ from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
 from homeassistant import config as conf_util
 from homeassistant.const import CONF_ICON, CONF_URL
-import urllib
-
-CONF_TITLE = "title"
-CONF_REQUIRE_ADMIN = "require_admin"
+import urllib, uuid
 
 from .const import DOMAIN
 
@@ -23,8 +20,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     config = await conf_util.async_hass_config_yaml(hass)        
     panels = config.get(DOMAIN, {})
     for url_path, info in panels.items():
-        print(url_path, info)
-        print(url_path.find('full_'))
         mode = 0
         # 全屏显示
         if url_path.find('full_') == 0:
@@ -37,11 +32,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         url_path = 'panel_iframe_' + url_path
         hass.components.frontend.async_register_built_in_panel(
             "iframe",
-            info.get(CONF_TITLE),
-            info.get(CONF_ICON),
+            info.get("title"),
+            info.get(CONF_ICON, "mdi:link-box-outline"),
             url_path,
-            {"url": f"/panel_iframe_www/index.html?mode={mode}&url={urllib.parse.quote(info[CONF_URL])}"},
-            require_admin=info[CONF_REQUIRE_ADMIN],
+            {"url": f"/panel_iframe_www/index.html?v={uuid.uuid1().hex}&mode={mode}&url={urllib.parse.quote(info[CONF_URL])}"},
+            require_admin=info.get("require_admin", False),
         )
     return True
 

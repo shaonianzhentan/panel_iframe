@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <script>
+        var ha = {
+            // 触发事件
+            fire(type, data) {
+                const event = new Event(type, {
+                    bubbles: true,
+                    cancelable: false,
+                    composed: true
+                });
+                event.detail = data;
+                top.document.querySelector('home-assistant').dispatchEvent(event);
+            },
+            init() {
+                let query = new URLSearchParams(location.search)
+                let url = decodeURIComponent(query.get('url'))
+                // 如果传入的是端口号
+                if (/^\d+$/.test(url)) {
+                    url = 'http://' + location.hostname + ':' + url
+                }
+                let mode = query.get('mode')
+                // 内置页面
+                if (mode == 3) {
+                    top.history.replaceState(null, null, url)
+                    return ha.fire('location-changed', { replace: true })
+                }
+                // 如果HTTPS协议，则打开新页面
+                if (top.location.protocol === 'https:' && url.indexOf('http://') == 0) {
+                    return window.open(url)
+                }
+                // 打开新页面
+                if (mode == 2) {
+                    return window.open(url)
+                }
+                // 全屏显示
+                if (mode == 1) {
+                    this.fullscreen()
+                }
+                location.href = url
+            },
+            fullscreen() {
+                try {
+                    let haPanelIframe = top.document.body
+                        .querySelector("home-assistant")
+                        .shadowRoot.querySelector("home-assistant-main")
+                        .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver ha-panel-iframe").shadowRoot;
+
+                    let iframe = null, toolbar = null;
+                    let subpage = haPanelIframe.querySelector("hass-subpage")
+                    if (subpage) {
+                        // 新版
+                        iframe = subpage.querySelector("iframe");
+                        toolbar = subpage.shadowRoot.querySelector('.toolbar')
+                        subpage.shadowRoot.querySelector('.content').style.height = '100vh'
+                    } else {
+                        // 旧版
+                        iframe = haPanelIframe.querySelector("iframe");
+                        toolbar = haPanelIframe.querySelector('app-toolbar')
+                    }
+                    iframe.style.position = 'absolute'
+                    toolbar.style.display = 'none'
+                    iframe.style.top = '0'
+                    iframe.style.height = '100%'
+                } catch (ex) {
+                    console.error(ex)
+                }
+            }
+        }
+        ha.init()
+    </script>
+</body>
+
+</html>
