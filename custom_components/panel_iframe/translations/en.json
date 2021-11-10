@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "title": "侧边栏面板管理",
+                "title": "侧边栏面板",
                 "description": "项目: https://github.com/shaonianzhentan/panel_iframe"
             }
         },

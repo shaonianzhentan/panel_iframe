@@ -6,7 +6,7 @@
 
 ```yaml
 panel_iframe:
-  fullscreen_router:
+  full_router:
     title: "全屏显示"
     url: "http://192.168.1.1"
   page_router:
