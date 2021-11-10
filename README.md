@@ -3,6 +3,14 @@
 
 官方文档：https://www.home-assistant.io/integrations/panel_iframe/
 
+## 安装方式
+
+安装完成重启HA，刷新一下页面，在集成里搜索`侧边栏面板`即可
+
+[![Add Integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=panel_iframe)
+
+## 使用方式
+
 介绍
 ```yaml
 panel_iframe:
