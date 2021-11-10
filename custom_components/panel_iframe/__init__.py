@@ -11,11 +11,6 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.http.register_static_path("/panel_iframe_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
-    # 删除面板
-    frontend_panels = hass.data.get("frontend_panels", {})
-    for panel in frontend_panels:
-        if panel.find("panel_iframe_") == 0:
-            hass.components.frontend.async_remove_panel(panel)
     # 添加面板
     config = await conf_util.async_hass_config_yaml(hass)        
     panels = config.get(DOMAIN, {})
@@ -41,5 +36,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    
+    # 删除面板
+    frontend_panels = hass.data.get("frontend_panels", {})
+    panels = []
+    for panel in frontend_panels:
+        if panel.find("panel_iframe_") == 0:
+            panels.append(panel)
+    # 删除
+    for panel in panels:
+        hass.components.frontend.async_remove_panel(panel)
     return True
