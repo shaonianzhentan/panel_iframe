@@ -35,7 +35,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             info.get("title"),
             info.get(CONF_ICON, "mdi:link-box-outline"),
             url_path,
-            {"url": f"/panel_iframe_www/index.html?v={uuid.uuid1().hex}&mode={mode}&url={urllib.parse.quote(info[CONF_URL])}"},
+            {"url": f"/panel_iframe_www/index.html?v={uuid.uuid1().hex}&mode={mode}&url={urllib.parse.quote(str(info[CONF_URL]))}"},
             require_admin=info.get("require_admin", False),
         )
     return True

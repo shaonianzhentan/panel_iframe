@@ -1,17 +1,17 @@
 panel_iframe:
-  full_kodbox:
+  full_github:
     title: 全屏页面
     icon: mdi:github
-    url: https://github.com/shaonianzhentan/panel_iframe
-  ha_config_server_control:
+    url: https://shaonianzhentan.github.io/
+  ha_github:
     title: 内置页面
     url: /config/server_control
-    icon: mdi:robot
+    icon: mdi:github
   page_github:
     title: 新页面
     icon: mdi:github
-    url: https://github.com/shaonianzhentan/panel_iframe
+    url: https://shaonianzhentan.github.io/
   github:
     title: 默认页面
     icon: mdi:github
-    url: https://github.com/shaonianzhentan/panel_iframe
+    url: https://shaonianzhentan.github.io/
