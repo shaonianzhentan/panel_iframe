@@ -1,5 +1,8 @@
 # panel_iframe
-侧边栏面板管理增强版
+侧边栏面板管理
+
+[![hacs_badge](https://img.shields.io/badge/Home-Assistant-%23049cdb)](https://www.home-assistant.io/)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 官方文档：https://www.home-assistant.io/integrations/panel_iframe/
 
@@ -15,18 +18,18 @@
 ```yaml
 panel_iframe:
   full_router:
-    title: "全屏显示"
-    url: "http://192.168.1.1"
+    title: 全屏显示
+    url: http://192.168.1.1
   page_router:
-    title: "打开新页面"
-    url: "http://192.168.1.1"
+    title: 打开新页面
+    url: http://192.168.1.1
   ha_page1:
-    title: "内置页面1"
-    url: "http://192.168.1.5"
+    title: 内置页面1
+    url: /config/automation/dashboard
     icon: mdi:fridge
   otherapp:
-    title: "默认显示"
-    url: "/otherapp"
+    title: 默认显示
+    url: /otherapp
     require_admin: true
 ```
 
