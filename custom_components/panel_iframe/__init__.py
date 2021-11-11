@@ -1,9 +1,10 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
-from homeassistant import config as conf_util
 from homeassistant.const import CONF_ICON, CONF_URL
-import urllib, uuid
+from homeassistant.util import yaml
+import urllib, uuid, os
+from shutil import copyfile
 
 from .const import DOMAIN
 
@@ -12,7 +13,11 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.http.register_static_path("/panel_iframe_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
     # 添加面板
-    config = await conf_util.async_hass_config_yaml(hass)        
+    file_path = hass.config.path('panel_iframe.yaml')
+    if os.path.exists(file_path) == False:
+        copyfile(hass.config.path('custom_components/panel_iframe/panel_iframe.yaml'), file_path)
+    config = yaml.load_yaml(file_path)
+
     panels = config.get(DOMAIN, {})
     for url_path, info in panels.items():
         mode = 0
