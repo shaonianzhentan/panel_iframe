@@ -15,11 +15,22 @@ class SimpleConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
-        """Handle the initial step."""
-        if self._async_current_entries():
-            return self.async_abort(reason="single_instance_allowed")
 
         if user_input is None:
-            return self.async_show_form(step_id="user")
+            errors = {}
+            mode_list = {
+                '0': '默认',
+                '1': '全屏',
+                '2': '新页面',
+                '3': '内置页面'
+            }
+            DATA_SCHEMA = vol.Schema({
+                vol.Required("title"): str,
+                vol.Required("icon", default='mdi:link-box-outline'): str,
+                vol.Required("url"): str,
+                vol.Required("mode", default=['0']): vol.In(mode_list),
+                vol.Required("require_admin", default=False): bool,
+            })
+            return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
 
-        return self.async_create_entry(title=DOMAIN, data=user_input)
+        return self.async_create_entry(title=user_input['title'], data=user_input)

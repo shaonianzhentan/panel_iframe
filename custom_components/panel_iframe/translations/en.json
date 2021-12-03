@@ -3,12 +3,17 @@
         "step": {
             "user": {
                 "title": "侧边栏面板",
-                "description": "项目: https://github.com/shaonianzhentan/panel_iframe"
+                "description": "项目: https://github.com/shaonianzhentan/panel_iframe",
+                "data": {
+                    "title": "名称",
+                    "icon": "图标",
+                    "url": "链接",
+                    "require_admin": "管理员可见",
+                    "mode": "显示模式"
+                }
             }
         },
         "error": {},
-        "abort": {
-            "single_instance_allowed": "仅允许单个配置."
-        }
+        "abort": {}
     }
 }
