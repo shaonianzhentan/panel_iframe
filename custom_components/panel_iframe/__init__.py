@@ -14,7 +14,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     url_path = entry.entry_id
     mode = cfg.get('mode')
     title = cfg.get('title')
-    icon = cfg.get('icon').replace('mdi-', 'mdi:')
+    icon = cfg.get('icon')
     url = cfg.get('url')
     require_admin = cfg.get('require_admin')
     hass.components.frontend.async_register_built_in_panel("iframe", title, icon, url_path,

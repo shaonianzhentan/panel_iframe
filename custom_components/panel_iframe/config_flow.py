@@ -33,4 +33,7 @@ class SimpleConfigFlow(ConfigFlow, domain=DOMAIN):
             })
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
 
+        user_input['title'] = user_input['title'].strip()
+        user_input['icon'] = user_input['icon'].strip().replace('mdi-', 'mdi:')
+        user_input['url'] = user_input['url'].strip()
         return self.async_create_entry(title=user_input['title'], data=user_input)
