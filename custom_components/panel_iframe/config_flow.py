@@ -28,8 +28,8 @@ class SimpleConfigFlow(ConfigFlow, domain=DOMAIN):
                 vol.Required("title"): str,
                 vol.Required("icon", default='mdi:link-box-outline'): str,
                 vol.Required("url"): str,
-                vol.Required("mode", default=['0']): vol.In(mode_list),
                 vol.Required("require_admin", default=False): bool,
+                vol.Required("mode", default=['0']): vol.In(mode_list),
             })
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
 
