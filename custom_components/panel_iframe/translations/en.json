@@ -3,9 +3,21 @@
         "step": {
             "user": {
                 "title": "侧边栏面板",
-                "description": "项目：https://github.com/shaonianzhentan/panel_iframe \n 图标：https://unpkg.com/@mdi/font@latest/preview.html",
+                "description": "项目：https://github.com/shaonianzhentan/panel_iframe",
                 "data": {
-                    "title": "名称",
+                    "title": "名称"
+                }
+            }
+        },
+        "error": {},
+        "abort": {}
+    },
+    "options": {
+        "step": {
+            "user": {
+                "title": "侧边栏面板",
+                "description": "图标：https://unpkg.com/@mdi/font@latest/preview.html",
+                "data": {
                     "icon": "图标",
                     "url": "链接",
                     "require_admin": "管理员可见",
@@ -13,7 +25,6 @@
                 }
             }
         },
-        "error": {},
-        "abort": {}
+        "error": {}
     }
 }
