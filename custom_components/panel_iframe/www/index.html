@@ -25,6 +25,10 @@
                 if (/^\d+$/.test(url)) {
                     url = 'http://' + location.hostname + ':' + url
                 }
+                // 如果传入的双斜杠，则忽略默认端口
+                if (url.indexOf('//') == 0) {
+                    url = location.protocol + '//' + location.hostname + url.substring(1)
+                }
                 let mode = query.get('mode')
                 // 内置页面
                 if (mode == 3) {
