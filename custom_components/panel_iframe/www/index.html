@@ -6,6 +6,9 @@
 </head>
 
 <body>
+    <h1 style="text-align: center; padding: 50px;">
+        <a id="a" target="_blank"></a>
+    </h1>
     <script>
         var ha = {
             // 触发事件
@@ -29,6 +32,15 @@
                 if (url.indexOf('//') == 0) {
                     url = location.protocol + '//' + location.hostname + url.substring(1)
                 }
+                // 如果传入端口路径
+                if (url.indexOf(':') == 0) {
+                    url = location.protocol + '//' + location.hostname + url
+                }
+                // 显示链接在界面
+                const a = document.getElementById('a')
+                a.innerText = url
+                a.setAttribute('href', url)
+
                 let mode = query.get('mode')
                 // 内置页面
                 if (mode == 3) {
