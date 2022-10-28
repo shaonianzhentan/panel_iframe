@@ -1,7 +1,7 @@
 {
     "domain": "panel_iframe",
     "name": "\u4FA7\u8FB9\u680F\u9762\u677F",
-    "version": "1.0",
+    "version": "2022.10.28",
     "config_flow": true,
     "documentation": "https://github.com/shaonianzhentan/panel_iframe",
     "dependencies": ["frontend"],

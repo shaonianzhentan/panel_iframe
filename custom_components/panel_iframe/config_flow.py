@@ -54,9 +54,9 @@ class OptionsFlowHandler(OptionsFlow):
             options = self.config_entry.options
             errors = {}
             DATA_SCHEMA = vol.Schema({
-                vol.Required("icon", default=options.get('icon', 'mdi:link-box-outline')): str,
+                vol.Required("icon", default=options.get('icon', 'mdi:link-box-outline')): cv.icon,
                 vol.Required("url", default=options.get('url', '')): str,
-                vol.Required("require_admin", default=options.get('require_admin', False)): bool,
+                vol.Required("require_admin", default=options.get('require_admin', False)): cv.boolean,
                 vol.Required("mode", default=options.get('mode', '0')): vol.In(mode_list),
             })
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
