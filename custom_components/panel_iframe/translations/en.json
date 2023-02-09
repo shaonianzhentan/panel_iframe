@@ -16,7 +16,7 @@
         "step": {
             "user": {
                 "title": "侧边栏面板",
-                "description": "图标：https://unpkg.com/@mdi/font@latest/preview.html",
+                "description": "点击问号图标，查看所有可选图标，点击复制直接使用",
                 "data": {
                     "icon": "图标",
                     "url": "链接",
