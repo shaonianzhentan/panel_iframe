@@ -67,20 +67,13 @@
                     let haPanelIframe = top.document.body
                         .querySelector("home-assistant")
                         .shadowRoot.querySelector("home-assistant-main")
-                        .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver ha-panel-iframe").shadowRoot;
-
-                    let iframe = null, toolbar = null;
+                        .shadowRoot.querySelector("ha-drawer partial-panel-resolver ha-panel-iframe").shadowRoot;
+                        
                     let subpage = haPanelIframe.querySelector("hass-subpage")
-                    if (subpage) {
-                        // 新版
-                        iframe = subpage.querySelector("iframe");
-                        toolbar = subpage.shadowRoot.querySelector('.toolbar')
-                        subpage.shadowRoot.querySelector('.content').style.height = '100vh'
-                    } else {
-                        // 旧版
-                        iframe = haPanelIframe.querySelector("iframe");
-                        toolbar = haPanelIframe.querySelector('app-toolbar')
-                    }
+                    let iframe = subpage.querySelector("iframe");
+                    let toolbar = subpage.shadowRoot.querySelector('.toolbar')
+                    subpage.shadowRoot.querySelector('.content').style.height = '100vh'
+
                     iframe.style.position = 'absolute'
                     toolbar.style.display = 'none'
                     iframe.style.top = '0'

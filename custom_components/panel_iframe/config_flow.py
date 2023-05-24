@@ -9,7 +9,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.core import callback
 from homeassistant.config_entries import ConfigFlow, OptionsFlow, ConfigEntry
 
-from .const import DOMAIN
+from .manifest import manifest
 
 mode_list = {
     '0': '默认',
@@ -18,7 +18,7 @@ mode_list = {
     '3': '内置页面'
 }
 
-class SimpleConfigFlow(ConfigFlow, domain=DOMAIN):
+class SimpleConfigFlow(ConfigFlow, domain=manifest.domain):
 
     VERSION = 1
 
