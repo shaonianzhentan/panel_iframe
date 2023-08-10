@@ -1,7 +1,7 @@
 {
     "domain": "panel_iframe",
     "name": "\u4FA7\u8FB9\u680F\u9762\u677F",
-    "version": "2023.8.7",
+    "version": "2023.8.10",
     "config_flow": true,
     "documentation": "/panel_iframe_www/mdi/preview.html",
     "dependencies": ["frontend"],

@@ -11,7 +11,6 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.http.register_static_path("/panel_iframe_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
-    #hass.components.frontend.add_extra_js_url(hass, f'/panel_iframe_www/panel_iframe.js?v={VERSION}')
     # 添加面板
     cfg = entry.options
     url_path = entry.entry_id

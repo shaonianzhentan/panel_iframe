@@ -2,174 +2,186 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="utf-8" />
-    <title>侧边栏管理</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            overflow: hidden;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>侧边栏管理</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow: hidden;
+      height: 90%;
+    }
 
-        a {
-            text-decoration: none;
-            color: #03a9f4;
-            display: block;
-            margin: 30px 0;
-            transition: .1s;
-        }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        a:hover {
-            color: #3788d8;
-        }
+    a {
+      text-decoration: none;
+      color: #03a9f4;
+      display: block;
+      margin: 30px 0;
+      transition: .1s;
+    }
 
-        #link:hover {
-            font-size: 20px;
-        }
+    a:hover {
+      color: #3788d8;
+    }
 
-        #orgin {
-            font-size: 50px;
-        }
+    #link:hover {
+      font-size: 20px;
+    }
 
-        .loader,
-        .loader:after {
-            border-radius: 50%;
-            width: 10em;
-            height: 10em;
-        }
+    #orgin {
+      font-size: 50px;
+    }
 
-        .loader {
-            margin: 60px auto;
-            font-size: 10px;
-            position: relative;
-            text-indent: -9999em;
-            border-top: 1.1em solid rgba(3, 169, 244, 0.2);
-            border-right: 1.1em solid rgba(3, 169, 244, 0.2);
-            border-bottom: 1.1em solid rgba(3, 169, 244, 0.2);
-            border-left: 1.1em solid #03a9f4;
-            -webkit-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-animation: load8 1.1s infinite linear;
-            animation: load8 1.1s infinite linear;
-        }
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+    }
 
-        @-webkit-keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
+    .loader {
+      margin: 60px auto;
+      font-size: 10px;
+      position: relative;
+      text-indent: -9999em;
+      border-top: 1.1em solid rgba(3, 169, 244, 0.2);
+      border-right: 1.1em solid rgba(3, 169, 244, 0.2);
+      border-bottom: 1.1em solid rgba(3, 169, 244, 0.2);
+      border-left: 1.1em solid #03a9f4;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: load8 1.1s infinite linear;
+      animation: load8 1.1s infinite linear;
+    }
 
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
+    @-webkit-keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
 
-        @keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
 
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+    @keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div>
     <div class="loader">Loading...</div>
-    <a id="link" target="_blank"></a>
-    <a id="orgin" target="_blank"></a>
-    <script>
-        const setLink = (id, text, link) => {
-            const a = document.getElementById(id)
-            a.innerText = text
-            a.setAttribute('href', link)
+    <a id="link" target="_blank">https://github.com/shaonianzhentan</a>
+    <a id="orgin" target="_blank">github.com</a>
+  </div>
+  <script>
+    const setLink = (id, text, link) => {
+      const a = document.getElementById(id)
+      a.innerText = text
+      a.setAttribute('href', link)
+    }
+
+    var ha = {
+      // 触发事件
+      fire(type, data) {
+        const event = new Event(type, {
+          bubbles: true,
+          cancelable: false,
+          composed: true
+        });
+        event.detail = data;
+        top.document.querySelector('home-assistant').dispatchEvent(event);
+      },
+      init() {
+        if (!location.search) return;
+        let query = new URLSearchParams(location.search)
+        let url = decodeURIComponent(query.get('url'))
+        // 如果传入的是端口号
+        if (/^\d+$/.test(url)) {
+          url = 'http://' + location.hostname + ':' + url
+        }
+        // 如果传入的双斜杠，则忽略默认端口
+        if (url.indexOf('//') == 0) {
+          url = location.protocol + '//' + location.hostname + url.substring(1)
+        }
+        // 如果传入端口路径
+        if (url.indexOf(':') == 0) {
+          url = location.protocol + '//' + location.hostname + url
+        }
+        // 显示链接在界面
+        setLink('link', url, url)
+
+        if (url.startsWith('http')) {
+          const uri = new URL(url)
+          setLink('orgin', uri.host, uri.origin)
         }
 
-        var ha = {
-            // 触发事件
-            fire(type, data) {
-                const event = new Event(type, {
-                    bubbles: true,
-                    cancelable: false,
-                    composed: true
-                });
-                event.detail = data;
-                top.document.querySelector('home-assistant').dispatchEvent(event);
-            },
-            init() {
-                let query = new URLSearchParams(location.search)
-                let url = decodeURIComponent(query.get('url'))
-                // 如果传入的是端口号
-                if (/^\d+$/.test(url)) {
-                    url = 'http://' + location.hostname + ':' + url
-                }
-                // 如果传入的双斜杠，则忽略默认端口
-                if (url.indexOf('//') == 0) {
-                    url = location.protocol + '//' + location.hostname + url.substring(1)
-                }
-                // 如果传入端口路径
-                if (url.indexOf(':') == 0) {
-                    url = location.protocol + '//' + location.hostname + url
-                }
-                // 显示链接在界面
-                setLink('link', url, url)
-
-                if (url.startsWith('http')) {
-                    const uri = new URL(url)
-                    setLink('orgin', uri.host, uri.origin)
-                }
-
-                let mode = query.get('mode')
-                // 内置页面
-                if (mode == 3) {
-                    top.history.replaceState(null, null, url)
-                    return ha.fire('location-changed', { replace: true })
-                }
-                // 如果HTTPS协议，则打开新页面
-                if (top.location.protocol === 'https:' && url.indexOf('http://') == 0) {
-                    return window.open(url)
-                }
-                // 打开新页面
-                if (mode == 2) {
-                    return window.open(url)
-                }
-                // 全屏显示
-                if (mode == 1) {
-                    this.fullscreen()
-                }
-                location.href = url
-            },
-            fullscreen() {
-                try {
-                    let haPanelIframe = top.document.body
-                        .querySelector("home-assistant")
-                        .shadowRoot.querySelector("home-assistant-main")
-                        .shadowRoot.querySelector("ha-drawer partial-panel-resolver ha-panel-iframe").shadowRoot;
-
-                    let subpage = haPanelIframe.querySelector("hass-subpage")
-                    let iframe = subpage.querySelector("iframe");
-                    let toolbar = subpage.shadowRoot.querySelector('.toolbar')
-                    subpage.shadowRoot.querySelector('.content').style.height = '100vh'
-
-                    iframe.style.position = 'absolute'
-                    toolbar.style.display = 'none'
-                    iframe.style.top = '0'
-                    iframe.style.height = '100%'
-                } catch (ex) {
-                    console.error(ex)
-                }
-            }
+        let mode = query.get('mode')
+        // 内置页面
+        if (mode == 3) {
+          top.history.replaceState(null, null, url)
+          return ha.fire('location-changed', { replace: true })
         }
-        ha.init()
-    </script>
+        // 如果HTTPS协议，则打开新页面
+        if (top.location.protocol === 'https:' && url.indexOf('http://') == 0) {
+          return window.open(url)
+        }
+        // 打开新页面
+        if (mode == 2) {
+          return window.open(url)
+        }
+        // 全屏显示
+        if (mode == 1) {
+          this.fullscreen()
+        }
+        location.href = url
+      },
+      fullscreen() {
+        try {
+          let haPanelIframe = top.document.body
+            .querySelector("home-assistant")
+            .shadowRoot.querySelector("home-assistant-main")
+            .shadowRoot.querySelector("ha-drawer partial-panel-resolver ha-panel-iframe").shadowRoot;
+
+          let subpage = haPanelIframe.querySelector("hass-subpage")
+          let iframe = subpage.querySelector("iframe");
+          let toolbar = subpage.shadowRoot.querySelector('.toolbar')
+          subpage.shadowRoot.querySelector('.content').style.height = '100vh'
+
+          iframe.style.position = 'absolute'
+          toolbar.style.display = 'none'
+          iframe.style.top = '0'
+          iframe.style.height = '100%'
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    }
+    ha.init()
+  </script>
 </body>
 
 </html>
