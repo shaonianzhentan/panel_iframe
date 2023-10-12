@@ -56,7 +56,6 @@ customElements.whenDefined('ha-panel-lovelace').then(() => {
     ha-icon-button-arrow-prev,
     ::slotted([slot="toolbar-icon"]) {
       pointer-events: auto;
-      color: var(--sidebar-icon-color);
     }
 
     .main-title {
