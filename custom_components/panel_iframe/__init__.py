@@ -1,7 +1,6 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
-import urllib
 
 from .manifest import manifest
 DOMAIN = manifest.domain
@@ -20,10 +19,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     url = cfg.get('url')
     require_admin = cfg.get('require_admin')
     if url is not None:
-        hass.components.frontend.async_register_built_in_panel("iframe", title, icon, url_path,
-            {"url": f"/panel_iframe_www/index.html?v={VERSION}&mode={mode}&url={urllib.parse.quote(url)}"},
-            require_admin=require_admin,
-        )
+        module_url = f"/panel_iframe_www/panel_iframe.js?v={VERSION}"
+        await hass.components.panel_custom.async_register_panel(
+            frontend_url_path=url_path,
+            webcomponent_name="ha-panel_iframe",
+            sidebar_title=title,
+            sidebar_icon=icon,
+            module_url=module_url,
+            config={
+                'mode': mode,
+                'url': url
+            },
+            require_admin=require_admin
+          )
     entry.async_on_unload(entry.add_update_listener(update_listener))
     return True
 
