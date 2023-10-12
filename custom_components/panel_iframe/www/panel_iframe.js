@@ -143,7 +143,7 @@ customElements.whenDefined('ha-panel-lovelace').then(() => {
       // 全屏显示
       if (mode == 1) {
         return html`
-        <iframe allow="fullscreen" src="${url}"></iframe>        
+        <iframe allow="fullscreen" src="${url}" style="height:100vh;"></iframe>        
         <ha-icon-button class="nav-button" @click=${this._toggleMenu.bind(this)}>
           <ha-icon icon="mdi:home-assistant"></ha-icon>
         </ha-icon-button>`
