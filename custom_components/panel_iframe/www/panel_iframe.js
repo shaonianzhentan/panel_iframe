@@ -116,7 +116,6 @@ customElements.whenDefined('ha-panel-lovelace').then(() => {
     }
 
     render() {
-      console.log('%O', this)
       const { config, title } = this.panel
       let { url, mode } = config
       // 如果传入的是端口号
@@ -138,16 +137,13 @@ customElements.whenDefined('ha-panel-lovelace').then(() => {
       }
       // 如果HTTPS协议，则打开新页面
       if (location.protocol === 'https:' && url.indexOf('http://') == 0) {
-        return window.open(url)
-      }
-      // 全屏显示
-      if (mode == 1) {
-        return html`
-        <iframe allow="fullscreen" src="${url}" style="height:100vh;"></iframe>
-        ${this.narrow ? html`<ha-icon-button class="nav-button" @click=${this._toggleMenu.bind(this)}>
-        <ha-icon icon="mdi:home-assistant"></ha-icon>
-      </ha-icon-button>` : ''}
-        `
+        
+      } else {
+        // 全屏显示
+        if (mode == 1) {
+          return html`<iframe allow="fullscreen" src="${url}" style="height:100vh;"></iframe>
+            ${this.narrow ? html`<ha-icon-button class="nav-button" @click=${this._toggleMenu.bind(this)}><ha-icon icon="mdi:home-assistant"></ha-icon></ha-icon-button>` : ''}`
+        }
       }
       // 内置显示
       return html`<div class="toolbar">
