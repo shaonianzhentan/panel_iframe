@@ -1,7 +1,7 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
-
+import asyncio
 from .manifest import manifest
 DOMAIN = manifest.domain
 VERSION = manifest.version
@@ -38,6 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def update_listener(hass, entry):
     """Handle options update."""
     await async_unload_entry(hass, entry)
+    await asyncio.sleep(1)
     await async_setup_entry(hass, entry)
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
