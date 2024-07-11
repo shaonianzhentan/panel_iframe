@@ -58,9 +58,15 @@ class OptionsFlowHandler(OptionsFlow):
                 vol.Required("url", default=options.get('url', '')): str,
                 vol.Required("require_admin", default=options.get('require_admin', False)): bool,
                 vol.Required("mode", default=options.get('mode', '0')): vol.In(mode_list),
+                vol.Required("proxy_access", default=options.get('proxy_access', False)): bool,
             })
             return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
         # 选项更新
         user_input['icon'] = user_input['icon'].strip().replace('mdi-', 'mdi:')
         user_input['url'] = user_input['url'].strip()
+
+        # 内置页面禁止使用代理
+        if user_input['mode'] == '3':
+            user_input['proxy_access'] = False
+
         return self.async_create_entry(title='', data=user_input)

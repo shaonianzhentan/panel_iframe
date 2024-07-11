@@ -21,7 +21,8 @@
                     "icon": "图标",
                     "url": "链接",
                     "require_admin": "管理员可见",
-                    "mode": "显示模式"
+                    "mode": "显示模式",
+                    "proxy_access": "代理访问"
                 }
             }
         },

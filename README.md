@@ -5,8 +5,6 @@
 
 
 ![visit](https://visitor-badge.laobi.icu/badge?page_id=shaonianzhentan.panel_iframe&left_text=visit)
-![panel_iframe](https://img.shields.io/github/forks/shaonianzhentan/panel_iframe)
-![panel_iframe](https://img.shields.io/github/stars/shaonianzhentan/panel_iframe)
 
 ## 安装方式
 
@@ -15,6 +13,16 @@
 [![Add Integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=panel_iframe)
 
 注意：长按侧边栏面板标题`Home Assistant`可隐藏菜单
+
+
+## 使用方法
+
+
+
+**代理访问**
+
+- 内网访问地址：`http://localhost:1880/node-red/`
+- 代理访问地址：`http://HASS地址:8123/node-red/`
 
 ## 如果这个项目对你有帮助，请我喝杯<del style="font-size: 14px;">咖啡</del>奶茶吧😘
 |  |支付宝|微信|

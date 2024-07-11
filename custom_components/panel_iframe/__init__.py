@@ -3,6 +3,8 @@ from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
 import asyncio
 from .manifest import manifest
+from .http_proxy import HttpProxy
+
 DOMAIN = manifest.domain
 VERSION = manifest.version
 
@@ -18,8 +20,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     icon = cfg.get('icon')
     url = cfg.get('url')
     require_admin = cfg.get('require_admin')
+    proxy_access = cfg.get('proxy_access', False)
+
     if url is not None:
         module_url = f"/panel_iframe_www/panel_iframe.js?v={VERSION}"
+
+        if proxy_access:
+            proxy = HttpProxy(url)
+            proxy.register(hass.http.app.router)
+            url = proxy.get_url()
+
         await hass.components.panel_custom.async_register_panel(
             frontend_url_path=url_path,
             webcomponent_name="ha-panel_iframe",
@@ -44,4 +54,5 @@ async def update_listener(hass, entry):
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     url_path = entry.entry_id
     hass.components.frontend.async_remove_panel(url_path)
+    # 移除路由监听
     return True
