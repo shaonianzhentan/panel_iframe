@@ -34,7 +34,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             proxy.register(hass.http.app.router)
             url = proxy.get_url()
 
-        await async_register_panel(
+        await async_register_panel(hass,
             frontend_url_path=url_path,
             webcomponent_name="ha-panel_iframe",
             sidebar_title=title,

@@ -19,7 +19,7 @@ class HttpProxy:
     def register(self, router):
         ''' 路由注册 '''
         route_url = f'/{self.proxy_path}/' + '{tail:.*}'
-        print(route_url)
+        # print(route_url)
         router.add_route('*', route_url, self.handler)
 
     def get_url(self, hostname=''):
@@ -46,8 +46,6 @@ class HttpProxy:
         target = target_url + self.get_path(request)
         if request.query_string:
             target += '?' + request.query_string
-
-        print(target)
 
         async with aiohttp.ClientSession() as session:
             async with session.request(
