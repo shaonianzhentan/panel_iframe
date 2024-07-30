@@ -1,5 +1,7 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.components.http import StaticPathConfig
+from homeassistant.components.panel_custom import async_register_panel
 import homeassistant.helpers.config_validation as cv
 import asyncio
 from .manifest import manifest
@@ -9,7 +11,9 @@ VERSION = manifest.version
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    hass.http.register_static_path("/panel_iframe_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
+    await hass.http.async_register_static_paths(
+        [ StaticPathConfig("/panel_iframe_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False) ]
+    )
     # 添加面板
     cfg = entry.options
     url_path = entry.entry_id
@@ -20,7 +24,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     require_admin = cfg.get('require_admin')
     if url is not None:
         module_url = f"/panel_iframe_www/panel_iframe.js?v={VERSION}"
-        await hass.components.panel_custom.async_register_panel(
+        await async_register_panel(
             frontend_url_path=url_path,
             webcomponent_name="ha-panel_iframe",
             sidebar_title=title,

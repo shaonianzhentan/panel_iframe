@@ -2,5 +2,6 @@
     "name": "侧边栏面板",
     "country": "CN",
     "render_readme": true,
-    "domains": []
+    "domains": [],
+    "homeassistant": "2024.7.0"
 }
