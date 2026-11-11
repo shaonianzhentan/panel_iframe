@@ -102,13 +102,16 @@
       const a = document.getElementById(id)
       a.innerText = text
       a.setAttribute('href', link)
+      a.setAttribute('rel', 'noopener noreferrer')
     }
 
-    var ha = {
+    const ha = {
       init() {
-        if (!location.search) return;
-        let query = new URLSearchParams(location.search)
-        let url = decodeURIComponent(query.get('url'))
+        if (!location.search) return
+        const query = new URLSearchParams(location.search)
+        // URLSearchParams.get 已经解码，不能再 decodeURIComponent，否则会破坏含 % 的地址
+        const url = query.get('url') || ''
+        if (!url) return
         // 显示链接在界面
         setLink('link', url, url)
 
@@ -117,14 +120,14 @@
           setLink('orgin', uri.host, uri.origin)
         }
 
-        let mode = query.get('mode')
+        const mode = query.get('mode')
         // 如果HTTPS协议，则打开新页面
-        if (location.protocol === 'https:' && url.indexOf('http://') == 0) {
-          return window.open(url)
+        if (location.protocol === 'https:' && url.indexOf('http://') === 0) {
+          return window.open(url, '_blank', 'noopener')
         }
         // 打开新页面
         if (mode == 2) {
-          return window.open(url)
+          return window.open(url, '_blank', 'noopener')
         }
         location.href = url
       }

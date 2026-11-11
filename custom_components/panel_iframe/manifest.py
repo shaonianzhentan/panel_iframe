@@ -1,19 +1,25 @@
-import os
-from homeassistant.util.json import load_json
+"""读取集成清单，不依赖 Home Assistant 内部工具函数。"""
+from __future__ import annotations
 
-CURRENT_PATH = os.path.dirname(__file__)
+import json
+from pathlib import Path
 
-class Manifest():
+CURRENT_PATH = Path(__file__).parent
 
-    def __init__(self):
-        self.manifest_path = f'{CURRENT_PATH}/manifest.json'
+
+class Manifest:
+    """仅暴露集成实际使用到的清单字段。"""
+
+    def __init__(self) -> None:
+        self.manifest_path = CURRENT_PATH / "manifest.json"
         self.update()
 
-    def update(self):
-        data = load_json(self.manifest_path, {})
-        self.domain = data.get('domain')
-        self.name = data.get('name')
-        self.version = data.get('version')
-        self.documentation = data.get('documentation')
+    def update(self) -> None:
+        data = json.loads(self.manifest_path.read_text(encoding="utf-8"))
+        self.domain: str = data["domain"]
+        self.name: str = data["name"]
+        self.version: str = data["version"]
+        self.documentation: str = data.get("documentation", "")
+
 
 manifest = Manifest()

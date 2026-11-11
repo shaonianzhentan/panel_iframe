@@ -3,7 +3,7 @@
         "step": {
             "user": {
                 "title": "侧边栏面板",
-                "description": "项目：https://github.com/shaonianzhentan/panel_iframe",
+                "description": "先为这个侧边栏面板取个名字（如「Node-RED」），保存后会自动进入配置页，在其中填写链接地址、显示模式，按需开启代理访问。\n\n项目主页：https://github.com/shaonianzhentan/panel_iframe\n\n使用提示：\n- **显示模式**：默认 / 全屏 / 新页面 / 内置页面（在 HA 内跳转）。\n- **代理访问**：把内网服务反向代理到 HA 同一域名下，公网只需暴露 HA；代理地址需填写可达的 http(s) 地址，可省略协议（自动按 http 处理），例如 `192.168.1.10:1880`。\n- **管理员可见**：开启后仅管理员能在侧边栏看到该面板。",
                 "data": {
                     "title": "名称"
                 }
@@ -16,16 +16,19 @@
         "step": {
             "user": {
                 "title": "侧边栏面板",
-                "description": "点击问号图标，查看所有可选图标，点击复制直接使用",
+                "description": "代理访问：把内网服务反向代理到 HA 同一域名下，公网只需暴露 HA。代理地址需填写可达的 http(s) 地址，可省略协议（自动按 http 处理），例如 `192.168.1.10:1880`；内置页面模式不支持代理。",
                 "data": {
                     "icon": "图标",
                     "url": "链接",
                     "require_admin": "管理员可见",
                     "mode": "显示模式",
-                    "proxy_access": "代理访问（不懂勿选）"
+                    "proxy_access": "代理访问"
                 }
             }
         },
-        "error": {}
+        "error": {
+            "proxy_url_invalid": "代理访问需填写可达的 http(s) 地址，可省略协议（自动按 http 处理），例如 192.168.1.10:1880",
+            "proxy_url_unreachable": "无法连接到代理地址，请确认服务已启动且 Home Assistant 能访问它（容器内 localhost 不是宿主机地址）"
+        }
     }
 }
