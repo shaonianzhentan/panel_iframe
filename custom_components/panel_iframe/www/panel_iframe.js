@@ -252,9 +252,16 @@ class PanelIframe extends HTMLElement {
 
     const url = this._resolveUrl(config.url)
     if (mode == 3) {
-      // 保留 HA 写入 history.state 的路由/dialog 数据，不能置空
-      window.history.replaceState(window.history.state, '', url)
-      this._fire('location-changed', { replace: true })
+      // 内置页面：HA 在把面板插入 DOM 之前就设置了 panel 属性，
+      // 此时从元素派发的事件无法冒泡到 window，必须在 window 上派发；
+      // 同时延后一个任务，避开 HA 正在进行的面板切换流程。
+      setTimeout(() => {
+        // 保留 HA 写入 history.state 的路由/dialog 数据，不能置空
+        window.history.replaceState(window.history.state, '', url)
+        window.dispatchEvent(
+          new CustomEvent('location-changed', { detail: { replace: true } })
+        )
+      }, 0)
       this.shadowRoot.innerHTML = ''
       return
     }
